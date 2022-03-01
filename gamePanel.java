@@ -4,6 +4,10 @@ import java.awt.event.ActionListener;
 
 public class gamePanel extends JPanel implements ActionListener {
 
+    gamePanel(){
+        
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
