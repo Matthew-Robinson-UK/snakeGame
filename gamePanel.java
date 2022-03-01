@@ -48,6 +48,17 @@ public class gamePanel extends JPanel implements ActionListener {
         }
         g.setColor(Color.red);
         g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
+
+        for(int i=0; i < bodyParts; i++) {
+            if(i == 0) {
+                g.setColor(Color.green);
+                g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+            }
+            else {
+                g.setColor(new Color(45,180,0));
+                g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+            }
+        }
     } 
     public void newApple(){
         appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
@@ -77,7 +88,23 @@ public class gamePanel extends JPanel implements ActionListener {
 
     }
     public void checkCollitions(){
-
+        for(int i = bodyParts; i > 0; i--) {
+            if((x[0] == x[i] && (y[0] == y[i]))) {
+                running = false;
+            }
+        }
+        if (x[0] < 0) {
+            running = false;
+        }
+        if (x[0] > SCREEN_WIDTH) {
+            running = false;
+        }
+        if (y[0] > SCREEN_HEIGHT) {
+            running = false;
+        }
+        if (y[0] < 0) {
+            running = false;
+        }
     }
     public void gameOver(Graphics g) {
 
@@ -85,13 +112,38 @@ public class gamePanel extends JPanel implements ActionListener {
     public class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e){
-
+            switch(e.getKeyCode()) {
+                case KeyEvent.VK_LEFT:
+                    if(direction != 'R') {
+                        direction = 'L';
+                    }
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    if(direction != 'L') {
+                        direction = 'R';
+                    }
+                    break;
+                case KeyEvent.VK_UP:
+                    if(direction != 'D') {
+                        direction = 'U';
+                    }
+                    break;
+                case KeyEvent.VK_DOWN:
+                    if(direction != 'U') {
+                        direction = 'D';
+                    }
+                    break;
+            }      
         }
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        
+       if(running) {
+           move();
+           checkApple();
+           checkCollitions();     
+       }
+        repaint();
     }
     
 }
