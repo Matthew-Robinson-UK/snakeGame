@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
+import javax.swing.JFrame;
 
 public class gamePanel extends JPanel implements ActionListener {
 
@@ -122,12 +123,36 @@ public class gamePanel extends JPanel implements ActionListener {
         g.setColor(Color.green);
         g.setFont(new Font("Ink Free", Font.BOLD, 40));
         FontMetrics metrics1 = getFontMetrics(g.getFont());
-        g.drawString("Score " + applesEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score " + applesEaten))/2, g.getFont().getSize());
+        g.drawString("Final Score " + applesEaten, (SCREEN_WIDTH - metrics1.stringWidth("Final Score " + applesEaten))/2, g.getFont().getSize());
 
         g.setColor(Color.red);
         g.setFont(new Font("Ink Free", Font.BOLD, 75));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("Game Over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over"))/2, SCREEN_HEIGHT/2);
+
+        addRestartButton();
+    }
+    private void addRestartButton() {
+        String buttonText = "New Game?";
+        JButton restartButton = new JButton(buttonText);
+        Font font = new Font("Helvetica", Font.BOLD, 50);
+        restartButton.setFont(font);
+    
+        setLayout(null);
+        restartButton.setBounds(100, 400, 400, 100);
+        add(restartButton);
+    
+        restartButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == restartButton) {
+                    new gameFrame();
+                }
+            }
+        });
+    
+        setButtonVisibility(false);
+    }
+    private void setButtonVisibility(boolean b) {
     }
     public class MyKeyAdapter extends KeyAdapter {
         @Override
